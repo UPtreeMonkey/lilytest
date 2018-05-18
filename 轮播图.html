@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        #swipe {
+            overflow: hidden;
+            position: relative;
+            height: 300px;
+        }
+
+        .slider-list {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+        }
+
+        .slider-item {
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="swipe">
+
+    </div>
+</body>
+
+</html>
+<script>
+    const container = document.querySelector('#swipe');
+    /*
+    初始显示第几张，
+    显示的dom机构,[],可以是传入dom结构
+    */
+    function Swipe({
+        container,
+        initeIndex,
+        frames
+    }) {
+        this.currentIndex = initeIndex || 0;
+        this.width = container.offsetWidth
+        this.inite(container, frames)
+
+    }
+    Swipe.prototype = {
+        constructor: Swipe,
+        inite(container, frames) {
+            // 1.生成dom结构
+            const ul = document.createElement('ul');
+            ul.classList.add('slider-list');
+            ul.style.width = `${frames.length*100}%`
+            frames.forEach((val, index) => {
+                const li = document.createElement('li')
+                li.classList.add('slider-item')
+                li.innerHTML = val;
+                ul.appendChild(li)
+            })
+            container.appendChild(ul)
+            this.ul = ul
+            // 2.初始化
+            this.move(2)
+        },
+        // 根据currentIndex 的值来移动
+        move(index) {
+            this.ul.style.left = -index * this.width + 'px';
+        }
+
+    }
+
+    function animate() {
+
+    }
+    const swipe = new Swipe({
+        container,
+        frames: [1, 2, 3, 4, 5]
+    })
+</script>

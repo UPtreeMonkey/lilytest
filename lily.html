@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .loading {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="button" id="btn">
+    <div class="loading">loading...</div>
+</body>
+
+</html>
+<script>
+    // 100ms轮询请求是否完成
+    let timer
+    let loaded = false
+    let  start
+    const loading = document.querySelector(".loading")
+    document.querySelector('#btn').onclick = function () {
+        loaded = false
+        start = new Date()
+        clearInterval(timer)
+        let count = 0
+        // timer = setInterval(()=>{
+            
+        //     if(getDistance()<500){
+        //         loading.style.display="none";
+        //     }else if(getDistance()<1500){
+        //         loading.style.display="block";
+        //     }else{
+        //         if(loaded){
+        //             loading.style.display="none";
+        //             clearInterval(timer)
+        //         }
+        //     }
+        //     console.log(getDistance())
+        // },50)
+        timer = setInterval(()=>{
+            count++
+            if(!loaded){
+                loading.style.display="block";
+            }else if(count===2){
+                loading.style.display="none";
+                clearInterval(timer)
+                console.log(count)
+            }
+        },500)
+        var ajax = new XMLHttpRequest();
+        ajax.open('get', "http://musicapi.leanapp.cn/dj/program?rid=336355127");
+        ajax.onload = function () {
+            loaded = true;
+            if(getDistance()>=1500){
+                loading.style.display="none";
+                clearInterval(timer)
+            }
+        }
+        ajax.send(null);
+    }
+    function getDistance(){
+        return new Date() -start
+    }
+</script>
+<!-- <script>
+    let isLoaded=false;
+    //用一个变量来标志是否请求回来了
+    
+    const loading = document.querySelector(".loading")
+    const start=new Date()
+    document.querySelector('#btn').onclick=function(){
+
+            var ajax = new XMLHttpRequest();
+            ajax.open('get',"http://musicapi.leanapp.cn/dj/program?rid=336355127");
+            ajax.onload=function(){
+                isLoaded = true;
+                // 数据回来标志为true
+                console.log(ajax.responseText)
+                const end = new Date();
+                if(end-start>1500){
+                    // 如果回来时间大于1500ms将loading隐藏
+                    loading.style.display="none";
+                }
+            }
+            ajax.send(null);
+
+        // 定时器500ms后判断是否请求回来了
+          const timmer = setTimeout(()=>{
+              
+                 if(!isLoaded){
+                     loading.style.display="block";
+                     setTimeout(()=>{
+                         // 定时器1000ms后判断是否请求回来了
+                        if(isLoaded){
+                            loading.style.display="none";
+                        }
+                     },1000)
+                 }              
+            },500)
+    }
+</script> -->

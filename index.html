@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+    <style>
+      
+    </style>
+</head>
+
+<body>
+    
+
+</html>
+<script>
+
+    var str = 'asdfssaaasasasasaa';
+
+
+var json = {};
+for (var i = 0; i < str.length; i++) {
+        if(!json[str.charAt(i)]){
+                json[str.charAt(i)] = 1;
+        }else{
+                json[str.charAt(i)]++;
+        }
+};
+var iMax = 0;
+var iIndex = '';
+for(var i in json){
+        if(json[i]>iMax){
+                iMax = json[i];
+                iIndex = i;
+        }
+}
+alert('出现次数最多的是:'+iIndex+'出现'+iMax+'次');
+console.log(json)
+</script>
